@@ -15,14 +15,6 @@ app.controller('CA-controller', function(){
     c.width = 1001;
     c.height = 600;
 
-    let firstRow = new Array(c.width).fill(0);
-    firstRow[501] = 1;
-
-    let imgData = ctx.createImageData(c.width, c.height);
-    console.log(c.width, imgData.data.length);
-
-    ctx.putImageData(imgData,0,self.currentRow);
-
     self.generateRule = function(event, rule=90){
         console.log(`generate rule function called with ${self.neighbors} neighbors and ${self.states} states`);
         if (rule > self.states**(self.states**self.neighbors)){
@@ -59,26 +51,38 @@ app.controller('CA-controller', function(){
     }
 
     self.drawRow = function(row){
-        let rgbRow = new Array(row.length*4).fill(0);
-        for (let i=0; i < row.length; i++){
-            if (row[i] === 0){
-                // BLUE
-                rgbRow[i*4+2] = 255;
-            } else if (row[i] === 1){
-                // RED
-                rgbRow[i*4] = 255;
-            } else if (row[i] === 2){
-                // YELLOW
-                rgbRow[i*4] = 255;
-                rgbRow[i*4+1] = 255;
-            } else if (row[i] = 3){
-                // GREEN
-                rgbRow[i*4+1] = 255;
-                rgbRow[i*4+2] = 255;
-            }
-            rgbRow[i*4+3] = 255;
+        let rgbRow = ctx.createImageData(c.width, 1);
+        for (let i=0; i<rgbRow.data.length; i+=4){
+            rgbRow.data[i] = 255;
+            rgbRow.data[i+1] = 0;
+            rgbRow.data[i+2] = 0;
+            rgbRow.data[i+3] = 255;
         }
-        return rgbRow;
+        // for (let i=0; i < row.length; i++){
+        //     if (row[i] === 0){
+        //         // BLUE
+        //         rgbRow[i*4+2] = 255;
+        //     } else if (row[i] === 1){
+        //         // RED
+        //         rgbRow[i*4] = 255;
+        //     } else if (row[i] === 2){
+        //         // YELLOW
+        //         rgbRow[i*4] = 255;
+        //         rgbRow[i*4+1] = 255;
+        //     } else if (row[i] = 3){
+        //         // GREEN
+        //         rgbRow[i*4+1] = 255;
+        //         rgbRow[i*4+2] = 255;
+        //     }
+        //     rgbRow[i*4+3] = 255;
+        // }
 
+        ctx.putImageData(rgbRow,0,self.currentRow);
+        self.currentRow++;
     }
+
+    let firstRow = new Array(c.width).fill(0);
+    firstRow[501] = 1;
+    self.drawRow(firstRow);
+    
 })
