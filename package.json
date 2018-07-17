@@ -1,0 +1,25 @@
+{
+  "name": "Cellular-Automata",
+  "version": "1.0.0",
+  "description": "",
+  "main": "canvas.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nathancarroll/Cellular-Automata.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nathancarroll/Cellular-Automata/issues"
+  },
+  "homepage": "https://github.com/nathancarroll/Cellular-Automata#readme",
+  "dependencies": {
+    "angular": "^1.7.2",
+    "express": "^4.16.3"
+  }
+}
