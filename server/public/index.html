@@ -8,8 +8,24 @@
         <script src="scripts/client.js"></script>
     </head>
     <body ng-app="CA-app">
-        <div ng-controller="CA-controller" ng-cloak>
-            <button id="goButton">GO</button>
+        <div ng-controller="CA-controller as vm" ng-cloak>
+            <div>
+                <label for="">Neighbors
+                <select ng-model="vm.neighbors">
+                    <option value=3>3</option>
+                    <option value=4>4</option>
+                    <option value=5>5</option>                    
+                </select>
+                </label>    
+                <label for="">Values
+                <select ng-model="vm.states">
+                    <option value=2>Blue & Red</option>
+                    <option value=3>Blue & Red & Yellow</option>
+                    <option value=4>Blue & Red & Yellow & Green</option>
+                </select>
+                </label>
+            </div>
+            <button ng-click="vm.generateRule()">GO</button>
             <canvas id="myCanvas"></canvas>
         </div>
     </body>
