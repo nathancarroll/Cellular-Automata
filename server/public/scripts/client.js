@@ -5,22 +5,27 @@ app.controller('CA-controller', function(){
 
     // Neighbors and states are hardcoded for now, will be variables in the future
     self.ruleString = '';
-    self.neighbors = 3;
-    self.states = 2;
+    self.neighbors = 0;
+    self.states = 0;
     self.rowNumber = 0;
+    self.currentRow = '';
 
     // Initialize your canvas object
     c = document.getElementById('myCanvas');
     ctx = c.getContext('2d');
 
+    // Canvas size is also hardcoded, this can be adjusted to a % of window width later
     c.width = 1001;
     c.height = 600;
 
     // The first row is currently hardcoded to be all zeroes except for the center unit
-    self.currentRow = new Array(c.width).fill('0');
-    self.currentRow[501] = '1';
-    self.currentRow = self.currentRow.join('');
-    console.log(self.currentRow);
+    // self.currentRow = new Array(c.width).fill('0');
+    // for (let i=450; i<550; i++){
+    //     if (i % 2 === 0) self.currentRow[i] = '1';
+    // }
+
+    // self.currentRow = self.currentRow.join('');
+    // console.log(self.currentRow);
 
     self.generateRule = function(rule=90){
         console.log(`generate rule function called with ${self.neighbors} neighbors and ${self.states} states`);
@@ -29,7 +34,7 @@ app.controller('CA-controller', function(){
             return;
         }
         self.ruleString = self.leadingZeros(rule.toString(self.states), self.states**self.neighbors);
-        console.log(self.ruleString);
+        console.log(rule, self.ruleString, self.ruleString.length);
     }
 
     self.leadingZeros = function(numberString, desiredLength){
@@ -54,7 +59,7 @@ app.controller('CA-controller', function(){
         }
         nextRow += self.applyRule(previousRow.charAt(previousRow.length-2), previousRow.charAt(previousRow.length-1), previousRow.charAt(0));
         // console.log('next row:', nextRow);
-        console.log(self.currentRow.length);
+        // console.log(self.currentRow.length);
         return nextRow;
     }
 
@@ -68,7 +73,7 @@ app.controller('CA-controller', function(){
         //     rgbRow.data[i+3] = 255;
         // }
         // row = Array.from(row);
-        console.log(row, row.length);
+        // console.log(row, row.length);
         for (let i=0; i < row.length; i++){
             if (row[i] === '0'){
                 // BLUE
@@ -94,6 +99,8 @@ app.controller('CA-controller', function(){
     // self.drawRow(firstRow);
 
     self.populate = function(){
+        self.currentRow = self.randomizeRow();
+        self.generateRule();
         while (self.rowNumber < c.height){
             self.drawRow(self.currentRow);
             self.currentRow = self.nextRow(self.currentRow)
@@ -102,7 +109,14 @@ app.controller('CA-controller', function(){
         console.log(self.currentRow);
     }
 
-    self.generateRule();
-    self.populate();
-    
+    self.randomizeRow = function(){
+        console.log(self.states);
+        let row = '';
+        while (row.length < c.width){
+            console.log(Math.floor(Math.random()*self.states));
+            row += Math.floor(Math.random()*self.states)
+        }
+        console.log(row);
+        return row;
+    }
 })

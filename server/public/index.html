@@ -24,8 +24,9 @@
                     <option value=4>Blue & Red & Yellow & Green</option>
                 </select>
                 </label>
+                <input ng-model="vm.rule" type="number" placeholder="pick a rule">
+                <button ng-click="vm.populate()">GO</button>
             </div>
-            <button ng-click="vm.generateRule()">GO</button>
             <canvas id="myCanvas"></canvas>
         </div>
     </body>
