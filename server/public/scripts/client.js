@@ -46,13 +46,15 @@ app.controller('CA-controller', function(){
 
     self.nextRow = function(previousRow){
         // console.log('current row', previousRow);
+        console.log(self.currentRow.length);
         let nextRow = '';
         nextRow += self.applyRule(previousRow.charAt(previousRow.length-1), previousRow.charAt(0), previousRow.charAt(1));
         for (i=1; i< previousRow.length-1; i++){
             nextRow += self.applyRule(previousRow.charAt(i-1), previousRow.charAt(i), previousRow.charAt(i+1))
         }
-        nextRow + self.applyRule(previousRow.charAt(previousRow.length-2), previousRow.charAt(previousRow.length-1), previousRow.charAt(0));
+        nextRow += self.applyRule(previousRow.charAt(previousRow.length-2), previousRow.charAt(previousRow.length-1), previousRow.charAt(0));
         // console.log('next row:', nextRow);
+        console.log(self.currentRow.length);
         return nextRow;
     }
 
@@ -68,17 +70,17 @@ app.controller('CA-controller', function(){
         // row = Array.from(row);
         console.log(row, row.length);
         for (let i=0; i < row.length; i++){
-            if (row[i] === 0){
+            if (row[i] === '0'){
                 // BLUE
                 rgbRow.data[i*4+2] = 255;
-            } else if (row[i] === 1){
+            } else if (row[i] === '1'){
                 // RED
                 rgbRow.data[i*4] = 255;
-            } else if (row[i] === 2){
+            } else if (row[i] === '2'){
                 // YELLOW
                 rgbRow.data[i*4] = 255;
                 rgbRow.data[i*4+1] = 255;
-            } else if (row[i] = 3){
+            } else if (row[i] = '3'){
                 // GREEN
                 rgbRow.data[i*4+1] = 255;
                 rgbRow.data[i*4+2] = 255;
@@ -92,7 +94,7 @@ app.controller('CA-controller', function(){
     // self.drawRow(firstRow);
 
     self.populate = function(){
-        while (self.rowNumber < 100){
+        while (self.rowNumber < c.height){
             self.drawRow(self.currentRow);
             self.currentRow = self.nextRow(self.currentRow)
             self.rowNumber++;
