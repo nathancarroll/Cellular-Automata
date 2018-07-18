@@ -27,14 +27,14 @@ app.controller('CA-controller', function(){
     // self.currentRow = self.currentRow.join('');
     // console.log(self.currentRow);
 
-    self.generateRule = function(rule=90){
-        console.log(`generate rule function called with ${self.neighbors} neighbors and ${self.states} states`);
-        if (rule > self.states**(self.states**self.neighbors)){
+    self.generateRule = function(){
+        console.log(`generate rule function called for rule ${self.rule} with ${self.neighbors} neighbors and ${self.states} states`);
+        if (self.rule > self.states**(self.states**self.neighbors)){
             console.log('invalid rule number! try again');
             return;
         }
-        self.ruleString = self.leadingZeros(rule.toString(self.states), self.states**self.neighbors);
-        console.log(rule, self.ruleString, self.ruleString.length);
+        self.ruleString = self.leadingZeros(self.rule.toString(self.states), self.states**self.neighbors);
+        console.log(self.ruleString, self.ruleString.length);
     }
 
     self.leadingZeros = function(numberString, desiredLength){
@@ -51,8 +51,9 @@ app.controller('CA-controller', function(){
 
     self.nextRow = function(previousRow){
         // console.log('current row', previousRow);
-        console.log(self.currentRow.length);
+        // console.log(self.currentRow.length);
         let nextRow = '';
+        console.log(previousRow.charAt(0), previousRow.charAt(1));
         nextRow += self.applyRule(previousRow.charAt(previousRow.length-1), previousRow.charAt(0), previousRow.charAt(1));
         for (i=1; i< previousRow.length-1; i++){
             nextRow += self.applyRule(previousRow.charAt(i-1), previousRow.charAt(i), previousRow.charAt(i+1))
@@ -99,6 +100,7 @@ app.controller('CA-controller', function(){
     // self.drawRow(firstRow);
 
     self.populate = function(){
+        self.clearCanvas();
         self.currentRow = self.randomizeRow();
         self.generateRule();
         while (self.rowNumber < c.height){
@@ -106,17 +108,22 @@ app.controller('CA-controller', function(){
             self.currentRow = self.nextRow(self.currentRow)
             self.rowNumber++;
         }
-        console.log(self.currentRow);
+        self.rowNumber = 0;
+        // console.log(self.currentRow);
     }
 
     self.randomizeRow = function(){
-        console.log(self.states);
+        // console.log(self.states);
         let row = '';
         while (row.length < c.width){
-            console.log(Math.floor(Math.random()*self.states));
+            // console.log(Math.floor(Math.random()*self.states));
             row += Math.floor(Math.random()*self.states)
         }
         console.log(row);
         return row;
+    }
+
+    self.clearCanvas = function(){
+        ctx.clearRect(0,0, c.width, c.height);
     }
 })
